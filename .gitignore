@@ -34,3 +34,6 @@ local.properties
 # Visual Studio
 _UpgradeReport_Files/
 /*/_ReSharper.*/
+
+#NDK
+obj/
