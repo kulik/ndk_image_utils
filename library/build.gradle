@@ -27,24 +27,26 @@ android {
 
 
     task nativeLibsToJar(type: Zip, description: 'create a jar archive of the native libs') {
-        destinationDir file("$buildDir/libs")
+        destinationDir file("libs")
         baseName 'native-libs'
         extension 'jar'
         from fileTree(dir: 'libs', include: '**/*.so')
         into 'lib/'
     }
 
-    tasks.withType(Compile) {
-        compileTask -> compileTask.dependsOn(nativeLibsToJar)
-    }
+ 
+//    nativeLibsToJar   tasks.withType(Compile) {
+//        compileTask -> compileTask.dependsOn(nativeLibsToJar)
+//    }
 
     task ndkBuild(type:Exec) {
         commandLine 'ndk-build'
+	nativeLibsToJar
     }
 
-    tasks.withType(Compile) {
-        compileTask -> compileTask.dependsOn ndkBuild
-    }
+//    tasks.withType(Compile) {
+//        compileTask -> compileTask.dependsOn ndkBuild
+//    }
 
 //    release {
 //        runProguard true
@@ -52,7 +54,7 @@ android {
 //        proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
 //    }
     dependencies {
-        compile fileTree(dir: "$buildDir/libs", include: 'native-libs.jar')
+        compile files('libs/native-libs.jar')
 //        compile fileTree(dir: "$buildDir/libs", include: '**/*.so')
     }
 }
