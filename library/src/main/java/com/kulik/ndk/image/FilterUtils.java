@@ -16,7 +16,7 @@ public class FilterUtils {
         return gray;
     }
 
-    public static Bitmap blurIt(Bitmap color) {
+    public synchronized static Bitmap blurIt(Bitmap color) {
         fastBlurer(20, color);
         return color;
     }

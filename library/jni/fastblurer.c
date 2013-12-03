@@ -99,15 +99,19 @@ void copyBitmapToTarget(Bitmap* dst,  AndroidBitmapInfo info, void* pixelsblur) 
             }
 
             Bitmap b = initBitmap(pixelscolor, infocolor);
+                LOGI("initBitmap");
             Bitmap dst;
             initBitmapMemory(&dst, infocolor.width, infocolor.height);
+                LOGI("initBitmapMemory");
 
             stackBlur(radius, b.red, b.green, b.blue, infocolor.width, infocolor.height, dst.red,dst.green, dst.blue);
 
+                LOGI("Stack blur is finished");
             copyBitmapToTarget(&dst, infocolor, pixelscolor);
-             freeUnsignedCharArray(dst.red);
-             freeUnsignedCharArray(dst.green);
-             freeUnsignedCharArray(dst.blue);
+                LOGI("bitmap has copied from target");
+//             freeUnsignedCharArray(dst.red);
+//             freeUnsignedCharArray(dst.green);
+//             freeUnsignedCharArray(dst.blue);
 
                 AndroidBitmap_unlockPixels(env, bitmapcolor);
             }
