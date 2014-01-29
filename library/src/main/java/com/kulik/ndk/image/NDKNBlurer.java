@@ -100,13 +100,14 @@ public class NDKNBlurer implements IBlurer {
 
 
     protected class BlurAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> implements CancelableCallback {
+        private Bitmap mBitmap;
         @Override
         protected Bitmap doInBackground(Bitmap... params) {
+            mBitmap = params[0];
 //            Bitmap dest = Bitmap.createScaledBitmap(params[0], params[0].getWidth() / 10 + 1, params[0].getHeight() / 10 + 1, true);
             if (params[0].getWidth() > 0 && params[0].getHeight() > 0) {
                 FilterUtils.blurIt(params[0]);
             }
-
             return params[0];//res
 //            return dest;
         }
@@ -115,6 +116,14 @@ public class NDKNBlurer implements IBlurer {
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             onBitmapBlured(bitmap);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            if (mBitmap != null && !mBitmap.isRecycled()) {
+                mBitmap.recycle();
+            }
         }
 
         @Override
